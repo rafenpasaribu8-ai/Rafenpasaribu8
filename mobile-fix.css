@@ -93,3 +93,19 @@ button,a{touch-action:manipulation}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
+
+
+/* Prevent off-canvas reveal transforms on touch screens. */
+@media(max-width:900px){
+  .reveal,.reveal[data-motion="left"],.reveal[data-motion="right"],.reveal[data-motion="zoom"],
+  .reveal.in,.reveal[data-motion="left"].in,.reveal[data-motion="right"].in,.reveal[data-motion="zoom"].in{
+    transform:none!important;
+  }
+  .hero-grid>.spotlight{transform:none!important}
+}
+@media(max-width:640px){
+  body{width:100vw!important;max-width:100vw!important}
+  .hero-grid>.spotlight{margin-left:0!important;margin-right:0!important}
+  .spotlight img{transform:none!important;animation:none!important}
+  .gallery-grid .reveal,.section-title.reveal,.timeline .reveal,.panel.reveal{transform:none!important}
+}
