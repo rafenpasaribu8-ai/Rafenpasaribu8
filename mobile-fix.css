@@ -1,0 +1,95 @@
+/* V2 responsive hardening: fixes narrow-screen overflow and restores photo crops. */
+:root{--surface-glass:rgba(10,17,38,.62);--soft-border:rgba(222,233,255,.16)}
+*,*::before,*::after{box-sizing:border-box}
+html{width:100%;max-width:100%;overflow-x:hidden;overflow-x:clip;scroll-padding-top:84px}
+body{width:100%;max-width:100%;margin:0;overflow-x:hidden;overflow-x:clip;overscroll-behavior-x:none}
+img,svg,video,canvas,iframe{max-width:100%}
+.container{width:100%!important;max-width:1240px!important;margin-left:auto!important;margin-right:auto!important;padding-left:clamp(16px,3vw,28px)!important;padding-right:clamp(16px,3vw,28px)!important}
+.wrap,header,nav,main,section,footer,.hero,.block,.nav,.nav-inner,.hero-grid,.about-grid,.stack,.gallery-grid,.panel,.footer-card{min-width:0;max-width:100%}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%}
+.brand{min-width:0;max-width:calc(100% - 60px);flex:0 1 auto;overflow-wrap:anywhere}
+.brand>div{min-width:0}
+.burger{flex:0 0 48px}
+.lead,.section-title p,.panel p,.quote p,.timeline p{overflow-wrap:break-word;word-wrap:break-word}
+.hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:clamp(20px,2.8vw,34px)}
+.hero-grid>*{min-width:0}
+.big-title{max-width:100%;font-size:clamp(2.7rem,6.6vw,6.3rem);overflow-wrap:normal;word-break:normal}
+.spotlight{min-width:0}
+.spotlight img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.stack>.glass{min-width:0;overflow:hidden}
+.stack img{width:100%!important;height:300px!important;max-width:100%!important;object-fit:cover!important;border-radius:22px!important;display:block!important}
+.stack>.glass:nth-child(2) img{height:260px!important}
+.actions .btn{min-width:0}
+.gallery-grid{grid-template-columns:repeat(12,minmax(0,1fr))}
+.card{min-width:0}
+.card img,.thumb img{display:block;width:100%;max-width:100%;object-fit:cover}
+.footer-card>div{min-width:0}
+button,a{touch-action:manipulation}
+@media(max-width:1080px){
+  .hero-grid,.about-grid{grid-template-columns:minmax(0,1fr)!important;min-height:0!important}
+  .hero-grid>*{grid-column:1/-1!important;width:100%!important;max-width:100%!important}
+  .hero-grid>.spotlight{min-height:clamp(390px,72vw,560px)!important}
+  .about-grid{gap:18px}
+  .metrics{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .stack{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .stack>.glass{align-self:stretch}
+}
+@media(max-width:900px){
+  .menu{display:none!important}
+  .burger{display:inline-grid!important;place-items:center}
+  .nav-inner{min-height:68px}
+  .hero{padding-top:22px}
+  .hero-grid{gap:24px!important}
+  .hero-grid>.reveal{transform:none!important}
+  .gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px}
+  .gallery-grid>.card{grid-column:span 1!important;min-height:260px}
+  .gallery-grid>.p1,.gallery-grid>.p8{grid-column:span 2!important;min-height:310px}
+  .gallery-grid .overlay{padding:16px}
+  .timeline,.quotes{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .footer-card>div{grid-template-columns:minmax(0,1fr)!important}
+}
+@media(max-width:640px){
+  .container{padding-left:18px!important;padding-right:18px!important}
+  .hero{padding:18px 0 54px}
+  .hero-grid{grid-template-columns:minmax(0,1fr)!important;gap:22px!important}
+  .hero-grid>.reveal,.hero-grid>.spotlight{grid-column:1!important;width:100%!important;max-width:100%!important}
+  .hero-grid>.reveal{padding:0!important}
+  .big-title{font-size:clamp(2.35rem,10.6vw,3.35rem)!important;line-height:.99;letter-spacing:-.055em;margin-top:18px}
+  .chip{max-width:100%;letter-spacing:.19em;padding:9px 12px;font-size:10px}
+  .lead{font-size:1rem;line-height:1.78;margin-top:18px}
+  .actions{display:grid;grid-template-columns:minmax(0,1fr);width:100%;gap:10px;margin-top:24px}
+  .actions>.btn{width:100%;min-width:0;max-width:100%;justify-content:center;text-align:center;white-space:normal;line-height:1.35;padding:14px 16px}
+  .metrics{grid-template-columns:minmax(0,1fr)!important;gap:10px;margin-top:22px}
+  .metric{padding:15px 16px;border-radius:19px}
+  .hero-grid>.spotlight{min-height:clamp(390px,112vw,480px)!important;border-radius:25px}
+  .spot-content{padding:20px}
+  .spot-content h2{font-size:clamp(1.45rem,6vw,2rem);line-height:1.12}
+  .spot-tag{font-size:10px;letter-spacing:.18em;padding:9px 11px}
+  section.block{padding:66px 0}
+  .section-title{margin-bottom:24px}
+  .section-title .kicker{letter-spacing:.18em;font-size:10px}
+  .section-title h3{font-size:clamp(1.8rem,8.4vw,2.5rem)!important;line-height:1.08;letter-spacing:-.045em}
+  .panel,.quote,.timeline .item,.footer-card{padding:19px!important;border-radius:22px}
+  .about-grid{grid-template-columns:minmax(0,1fr)!important}
+  .stack{grid-template-columns:minmax(0,1fr)!important}
+  .stack img,.stack>.glass:nth-child(2) img{height:clamp(220px,70vw,300px)!important}
+  .gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px}
+  .gallery-grid>.card{grid-column:span 1!important;min-height:240px}
+  .gallery-grid>.p1,.gallery-grid>.p8{grid-column:span 2!important;min-height:300px}
+  .gallery-grid .overlay{padding:12px}
+  .gallery-grid .overlay h4{font-size:clamp(14px,4vw,17px);line-height:1.25}
+  .gallery-grid .overlay p{font-size:12px;line-height:1.45}
+  .gallery-grid .badge{font-size:9px;letter-spacing:.1em;padding:7px 9px}
+  .timeline,.quotes{grid-template-columns:minmax(0,1fr)!important}
+  .thumb{flex-basis:205px}
+  #backToTop{right:12px;bottom:12px}
+}
+@media(max-width:380px){
+  .container{padding-left:15px!important;padding-right:15px!important}
+  .big-title{font-size:clamp(2.1rem,10vw,2.55rem)!important}
+  .gallery-grid{grid-template-columns:minmax(0,1fr)!important}
+  .gallery-grid>.card,.gallery-grid>.p1,.gallery-grid>.p8{grid-column:1!important;min-height:260px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
