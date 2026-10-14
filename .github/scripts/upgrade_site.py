@@ -31,19 +31,37 @@ def main() -> None:
 
     html = DATA_URL.sub(extract, html)
 
-    # Repair image tags if a previous version of this script left a closing bracket off.
-    html = re.sub(r'(<img\b[^>]*?)(?=\s*<(?:div|section|a|p|span|footer|/))', r'\1>', html, flags=re.IGNORECASE)
-    # Normalize attributes affected by older malformed tag generation.
-    html = re.sub(r'\sloading="(eager|lazy)\s+decoding="async"', r' loading="\1" decoding="async"', html, flags=re.IGNORECASE)
-
-    first_image = True
+    # Rebuild img tags from recognized attributes. This also repairs older malformed tags.
     img_tag = re.compile(r"<img\b[^>]*>", re.IGNORECASE)
+    def normalize_image(match: re.Match[str]) -> str:
+        raw = match.group(0)
+        attrs: list[str] = []
+        for name in ("src", "alt", "id", "class", "width", "height", "loading", "decoding", "fetchpriority", "aria-label"):
+            value = re.search(r'\b' + re.escape(name) + r'="([^"]*)"', raw, re.IGNORECASE)
+            if value:
+                attrs.append(f'{name}="{value.group(1)}"')
+        # Older output may have merged several attributes into the loading value.
+        loading = re.search(r'\bloading="(eager|lazy)', raw, re.IGNORECASE)
+        decoding = re.search(r'\bdecoding="(async|sync|auto)', raw, re.IGNORECASE)
+        priority = re.search(r'\bfetchpriority="(high|low|auto)', raw, re.IGNORECASE)
+        attrs = [a for a in attrs if not a.startswith(("loading=", "decoding=", "fetchpriority="))]
+        if loading:
+            attrs.append(f'loading="{loading.group(1).lower()}"')
+        if decoding:
+            attrs.append(f'decoding="{decoding.group(1).lower()}"')
+        if priority:
+            attrs.append(f'fetchpriority="{priority.group(1).lower()}"')
+        return "<img " + " ".join(attrs) + ">"
+
+    html = img_tag.sub(normalize_image, html)
+
+    # Add browser-friendly loading hints without altering image sources.
+    first_image = True
     def tune_image(match: re.Match[str]) -> str:
         nonlocal first_image
         tag = match.group(0)
-        loading = "eager" if first_image else "lazy"
         if not re.search(r'\sloading\s*=', tag, flags=re.IGNORECASE):
-            tag = tag[:-1] + f' loading="{loading}">'
+            tag = tag[:-1] + (' loading="eager">' if first_image else ' loading="lazy">')
         if not re.search(r'\sdecoding\s*=', tag, flags=re.IGNORECASE):
             tag = tag[:-1] + ' decoding="async">'
         if first_image and not re.search(r'\sfetchpriority\s*=', tag, flags=re.IGNORECASE):
@@ -58,7 +76,7 @@ def main() -> None:
         html = html.replace("</body>", '  <script src="./upgrade.js" defer></script>\n</body>', 1)
     HTML_PATH.write_text(html, encoding="utf-8")
     external_bytes = sum(path.stat().st_size for path in ASSET_DIR.glob("*.jpg"))
-    print(f"Replaced {replacements} embedded data URLs; repaired image tags.")
+    print(f"Replaced {replacements} embedded data URLs; normalized image tags.")
     print(f"Final HTML size: {HTML_PATH.stat().st_size:,} bytes.")
     print(f"External photo payload: {external_bytes:,} bytes.")
 
