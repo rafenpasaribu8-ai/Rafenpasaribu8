@@ -186,14 +186,15 @@ section.block:nth-of-type(even)::before{content:"";position:absolute;inset:0;z-i
   border-radius:25px!important;border:1px solid rgba(222,231,255,.16)!important;
   background:linear-gradient(145deg,rgba(145,239,255,.085),rgba(255,255,255,.015))!important;
   box-shadow:0 15px 46px rgba(0,0,0,.19),inset 0 1px 0 rgba(255,255,255,.06)!important;
-  transition:transform .7s var(--pro-ease),border-color .4s ease,box-shadow .6s var(--pro-ease)!important;
-  transform:translate3d(0,0,0);
+  transition:transform .72s var(--pro-ease),border-color .4s ease,box-shadow .6s var(--pro-ease)!important;
+  transform:perspective(1200px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translate3d(0,0,0);
+  transform-style:preserve-3d;
 }
 .gallery-grid .card:nth-child(5n+2){--tile-accent:var(--pro-violet)}
 .gallery-grid .card:nth-child(5n+3){--tile-accent:var(--pro-pink)}
 .gallery-grid .card:nth-child(5n+4){--tile-accent:var(--pro-coral)}
 .gallery-grid .card:nth-child(5n+5){--tile-accent:var(--pro-lime)}
-.gallery-grid .card:hover{transform:translate3d(0,-5px,0)!important;border-color:rgba(224,231,255,.3)!important;box-shadow:0 25px 68px rgba(0,0,0,.33),0 0 30px rgba(145,239,255,.055)!important}
+.gallery-grid .card:hover{transform:perspective(1200px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translate3d(0,-5px,0)!important;border-color:rgba(224,231,255,.3)!important;box-shadow:0 25px 68px rgba(0,0,0,.33),0 0 30px rgba(145,239,255,.055)!important}
 .gallery-grid .card img{display:block;width:100%!important;height:100%!important;min-height:inherit;object-fit:cover!important;filter:saturate(1.025) contrast(1.025)!important;transition:transform 1s var(--pro-ease),filter .6s ease!important}
 .gallery-grid .card:hover img{transform:scale(1.045)!important;filter:saturate(1.105) contrast(1.035)!important}
 .gallery-grid .card::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;opacity:0;background:linear-gradient(116deg,transparent 17%,rgba(255,255,255,.18) 47%,transparent 76%);transform:translateX(-120%);transition:transform 1.05s var(--pro-ease),opacity .2s ease}
