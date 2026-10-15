@@ -244,8 +244,8 @@ footer p{color:var(--pro-subtle)!important;font-size:12px}
 .reveal[data-motion="right"]{transform:translate3d(14px,8px,0) scale(.996)}
 .reveal[data-motion="zoom"]{transform:translate3d(0,10px,0) scale(.98)}
 .reveal.in,.reveal[data-motion="left"].in,.reveal[data-motion="right"].in,.reveal[data-motion="zoom"].in{opacity:1;transform:translate3d(0,0,0) scale(1)}
-.intro{background:radial-gradient(ellipse at 48% 42%,rgba(111,111,255,.16),transparent 35%),radial-gradient(ellipse at 62% 66%,rgba(24,208,225,.08),transparent 34%),linear-gradient(180deg,#060816,#090c1b)!important;transition:opacity .65s var(--pro-ease),transform .65s var(--pro-ease)!important}
-.intro.hide{opacity:0;pointer-events:none;visibility:hidden}
+.intro{background:radial-gradient(ellipse at 48% 42%,rgba(111,111,255,.16),transparent 35%),radial-gradient(ellipse at 62% 66%,rgba(24,208,225,.08),transparent 34%),linear-gradient(180deg,#060816,#090c1b)!important;transition:opacity .65s var(--pro-ease),transform .65s var(--pro-ease),visibility 0s linear 0s!important}
+.intro.hide{opacity:0;pointer-events:none;visibility:hidden;transition:opacity .65s var(--pro-ease),transform .65s var(--pro-ease),visibility 0s linear .65s!important}
 .orb{box-shadow:0 0 0 1px rgba(255,255,255,.16),0 0 82px rgba(145,239,255,.18),0 0 100px rgba(187,162,255,.1)!important}
 .intro h1{font-size:clamp(2.6rem,7vw,5.7rem)!important;letter-spacing:.16em!important}
 .welcome{letter-spacing:.34em!important;font-size:10px!important}
